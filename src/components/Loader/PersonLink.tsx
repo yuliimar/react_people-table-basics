@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Person } from '../../types/Person';
 
 type Props = {
@@ -17,19 +18,13 @@ export const PersonLink = ({ person }: Props) => {
     );
   }
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.location.hash = `#/people/${person.slug}`;
-  };
-
   return (
-    <a
-      href={`#/people/${person.slug}`}
+    <Link
+      to={`/people/${person.slug}`}
       className={person.sex === 'f' ? 'has-text-danger' : ''}
       data-cy="person-link"
-      onClick={handleClick}
     >
       {person.name}
-    </a>
+    </Link>
   );
 };

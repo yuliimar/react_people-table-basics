@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Person } from '../types/Person';
 import { getPeople } from '../api';
-import { PersonLink } from '../components/Loader/PersonLink';
+import { PeopleTable } from '../components/Loader/PeopleTable';
 
 export const PersonPage = () => {
   const { slug } = useParams();
@@ -16,29 +16,23 @@ export const PersonPage = () => {
     });
   }, [slug]);
 
+  const findPerson = (name: string | null) => {
+    if (!name) {
+      return null;
+    }
+
+    return people.find(p => p.name === name) || null;
+  };
+
   if (!person) {
     return <div>Person not found</div>;
   }
 
-  const findPerson = (name: string | null) =>
-    name ? people.find(p => p.name === name) || null : null;
-
   return (
     <div>
-      <h1 className="title">{person.name}</h1>
-      <div className="content">
-        <p>
-          Born: {person.born}, Died: {person.died}
-        </p>
-        <p>
-          Mother: <PersonLink person={findPerson(person.motherName)} />
-        </p>{' '}
-        {/* ← motherName */}
-        <p>
-          Father: <PersonLink person={findPerson(person.fatherName)} />
-        </p>{' '}
-        {/* ← fatherName */}
-      </div>
+      <h1 className="title">People Page</h1>
+
+      <PeopleTable people={people} selectedSlug={slug} />
     </div>
   );
 };

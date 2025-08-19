@@ -16,23 +16,15 @@ export const PersonPage = () => {
     });
   }, [slug]);
 
-  const findPerson = (name: string | null) => {
-    if (!name) {
-      return null;
-    }
-
-    return people.find(p => p.name === name) || null;
-  };
-
-  if (!person) {
-    return <div>Person not found</div>;
-  }
-
   return (
     <div>
       <h1 className="title">People Page</h1>
 
       <PeopleTable people={people} selectedSlug={slug} />
+
+      {!person && (
+        <div className="notification is-warning">Person not found</div>
+      )}
     </div>
   );
 };
